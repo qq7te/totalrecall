@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/navigation_capture">
+
+    <fragment
+        android:id="@+id/navigation_capture"
+        android:name="com.example.captureapp.ui.capture.CaptureFragment"
+        android:label="Capture"
+        tools:layout="@layout/fragment_capture" />
+
+    <fragment
+        android:id="@+id/navigation_browse"
+        android:name="com.example.captureapp.ui.browse.BrowseFragment"
+        android:label="Browse"
+        tools:layout="@layout/fragment_browse">
+        <action
+            android:id="@+id/action_browse_to_detail"
+            app:destination="@id/navigation_detail" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_detail"
+        android:name="com.example.captureapp.ui.detail.DetailFragment"
+        android:label="Entry Details"
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="entryId"
+            app:argType="long" />
+    </fragment>
+</navigation> 

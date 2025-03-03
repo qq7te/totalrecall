@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_capture"
+        android:icon="@drawable/ic_camera"
+        android:title="Capture" />
+    <item
+        android:id="@+id/navigation_browse"
+        android:icon="@drawable/ic_browse"
+        android:title="Browse" />
+</menu> 
