@@ -57,8 +57,7 @@ dependencies {
     implementation 'androidx.camera:camera-lifecycle:1.1.0'
     implementation 'androidx.camera:camera-view:1.1.0'
     
-    // Location
-    implementation 'com.google.android.gms:play-services-location:20.0.0'
+    // Location - using native Android LocationManager (FOSS compatible)
     
     // Glide for image loading
     implementation 'com.github.bumptech.glide:glide:4.13.2'

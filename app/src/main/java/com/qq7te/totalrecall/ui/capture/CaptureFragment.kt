@@ -2,7 +2,10 @@ package com.qq7te.totalrecall.ui.capture
 
 import android.Manifest
 import android.content.ContentValues
+import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -23,8 +26,6 @@ import androidx.lifecycle.lifecycleScope
 import com.qq7te.totalrecall.CaptureApplication
 import com.qq7te.totalrecall.R
 import com.qq7te.totalrecall.databinding.FragmentCaptureBinding
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -42,7 +43,7 @@ class CaptureFragment : Fragment() {
     
     private var imageCapture: ImageCapture? = null
     private lateinit var cameraExecutor: ExecutorService
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var locationManager: LocationManager
     private var photoUri: Uri? = null
     
     private val requestPermissionLauncher = registerForActivityResult(
@@ -68,7 +69,7 @@ class CaptureFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        locationManager = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
         cameraExecutor = Executors.newSingleThreadExecutor()
         
         binding.captureButton.setOnClickListener { takePhoto() }
@@ -182,23 +183,22 @@ class CaptureFragment : Fragment() {
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-                lifecycleScope.launch {
-                    viewModel.saveEntry(
-                        text = text,
-                        photoUri = photoUri.toString(),
-                        latitude = location?.latitude,
-                        longitude = location?.longitude
-                    )
-                    
-                    // Reset UI
-                    binding.entryText.text?.clear()
-                    binding.photoPreview.visibility = View.GONE
-                    binding.saveButton.isEnabled = false
-                    photoUri = null
-                    
-                    Toast.makeText(requireContext(), "Entry saved successfully", Toast.LENGTH_SHORT).show()
-                }
+            val location = getLastKnownLocation()
+            lifecycleScope.launch {
+                viewModel.saveEntry(
+                    text = text,
+                    photoUri = photoUri.toString(),
+                    latitude = location?.latitude,
+                    longitude = location?.longitude
+                )
+                
+                // Reset UI
+                binding.entryText.text?.clear()
+                binding.photoPreview.visibility = View.GONE
+                binding.saveButton.isEnabled = false
+                photoUri = null
+                
+                Toast.makeText(requireContext(), "Entry saved successfully", Toast.LENGTH_SHORT).show()
             }
         } else {
             lifecycleScope.launch {
@@ -218,6 +218,22 @@ class CaptureFragment : Fragment() {
                 Toast.makeText(requireContext(), "Entry saved without location", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+    
+    @Suppress("MissingPermission")
+    private fun getLastKnownLocation(): Location? {
+        // Try GPS first, then Network provider
+        val providers = listOf(LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER)
+        
+        for (provider in providers) {
+            if (locationManager.isProviderEnabled(provider)) {
+                val location = locationManager.getLastKnownLocation(provider)
+                if (location != null) {
+                    return location
+                }
+            }
+        }
+        return null
     }
     
     override fun onDestroyView() {
