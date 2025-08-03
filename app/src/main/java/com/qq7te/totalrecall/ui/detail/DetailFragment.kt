@@ -1,12 +1,15 @@
 package com.qq7te.totalrecall.ui.detail
 
+import android.app.AlertDialog
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.qq7te.totalrecall.CaptureApplication
@@ -59,6 +62,32 @@ class DetailFragment : Fragment() {
                     .into(binding.photo)
             }
         }
+        
+        viewModel.deleteResult.observe(viewLifecycleOwner) { success ->
+            success?.let {
+                if (it) {
+                    Toast.makeText(requireContext(), "Entry deleted successfully", Toast.LENGTH_SHORT).show()
+                    findNavController().navigateUp()
+                } else {
+                    Toast.makeText(requireContext(), "Failed to delete entry", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        
+        binding.buttonDelete.setOnClickListener {
+            showDeleteConfirmationDialog()
+        }
+    }
+    
+    private fun showDeleteConfirmationDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Delete Entry")
+            .setMessage("Are you sure you want to delete this entry? This action cannot be undone.")
+            .setPositiveButton("Delete") { _, _ ->
+                viewModel.deleteEntry()
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
     
     override fun onDestroyView() {

@@ -55,5 +55,17 @@
             app:layout_constraintTop_toBottomOf="@+id/location"
             tools:text="This is the content of the entry with all the details that the user entered when creating this entry." />
 
+        <Button
+            android:id="@+id/button_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:text="Delete Entry"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_content" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView> 

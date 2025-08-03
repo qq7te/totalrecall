@@ -1,6 +1,7 @@
 package com.qq7te.totalrecall.data
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
@@ -18,4 +19,7 @@ interface EntryDao {
     
     @Query("SELECT * FROM entries WHERE id = :id")
     fun getEntryById(id: Long): Entry
+    
+    @Delete
+    suspend fun delete(entry: Entry)
 } 

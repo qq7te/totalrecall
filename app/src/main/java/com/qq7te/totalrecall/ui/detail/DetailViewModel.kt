@@ -17,6 +17,9 @@ class DetailViewModel(
     private val _entry = MutableLiveData<Entry?>()
     val entry: LiveData<Entry?> = _entry
     
+    private val _deleteResult = MutableLiveData<Boolean?>()
+    val deleteResult: LiveData<Boolean?> = _deleteResult
+    
     init {
         loadEntry()
     }
@@ -29,6 +32,22 @@ class DetailViewModel(
                 // Handle the case where the entry doesn't exist
                 _entry.value = null
             }
+        }
+    }
+    
+    fun deleteEntry() {
+        val currentEntry = _entry.value
+        if (currentEntry != null) {
+            viewModelScope.launch {
+                try {
+                    repository.delete(currentEntry)
+                    _deleteResult.value = true
+                } catch (e: Exception) {
+                    _deleteResult.value = false
+                }
+            }
+        } else {
+            _deleteResult.value = false
         }
     }
 }

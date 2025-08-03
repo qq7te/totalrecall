@@ -23,4 +23,10 @@ class EntryRepository(private val entryDao: EntryDao) {
             entryDao.getEntryById(id)
         }
     }
+    
+    suspend fun delete(entry: Entry) {
+        return withContext(Dispatchers.IO) {
+            entryDao.delete(entry)
+        }
+    }
 } 
