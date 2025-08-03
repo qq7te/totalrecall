@@ -1,4 +1,4 @@
-package com.example.captureapp
+package com.qq7te.totalrecall
 
 import org.junit.Test
 

@@ -10,7 +10,7 @@ android {
     compileSdk 34 // Android 12
 
     defaultConfig {
-        applicationId "com.example.captureapp"
+        applicationId "com.qq7te.totalrecall"
         minSdk 26
         targetSdk 33
         versionCode 1
@@ -33,7 +33,7 @@ android {
         jvmTarget = '17'
     }
     
-    namespace = "com.example.captureapp"
+    namespace = "com.qq7te.totalrecall"
 }
 
 dependencies {

@@ -1,8 +1,8 @@
-package com.example.captureapp
+package com.qq7te.totalrecall
 
 import android.app.Application
-import com.example.captureapp.data.AppDatabase
-import com.example.captureapp.data.EntryRepository
+import com.qq7te.totalrecall.data.AppDatabase
+import com.qq7te.totalrecall.data.EntryRepository
 
 class CaptureApplication : Application() {
     

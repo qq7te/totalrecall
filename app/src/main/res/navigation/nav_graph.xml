@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_capture"
-        android:name="com.example.captureapp.ui.capture.CaptureFragment"
+        android:name="com.qq7te.totalrecall.ui.capture.CaptureFragment"
         android:label="Capture"
         tools:layout="@layout/fragment_capture" />
 
     <fragment
         android:id="@+id/navigation_browse"
-        android:name="com.example.captureapp.ui.browse.BrowseFragment"
+        android:name="com.qq7te.totalrecall.ui.browse.BrowseFragment"
         android:label="Browse"
         tools:layout="@layout/fragment_browse">
         <action
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/navigation_detail"
-        android:name="com.example.captureapp.ui.detail.DetailFragment"
+        android:name="com.qq7te.totalrecall.ui.detail.DetailFragment"
         android:label="Entry Details"
         tools:layout="@layout/fragment_detail">
         <argument

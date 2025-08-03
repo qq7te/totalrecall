@@ -1,4 +1,4 @@
-package com.example.captureapp.ui.browse
+package com.qq7te.totalrecall.ui.browse
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.captureapp.CaptureApplication
-import com.example.captureapp.databinding.FragmentBrowseBinding
+import com.qq7te.totalrecall.CaptureApplication
+import com.qq7te.totalrecall.databinding.FragmentBrowseBinding
 
 class BrowseFragment : Fragment() {
     

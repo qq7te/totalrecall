@@ -1,4 +1,4 @@
-package com.example.captureapp.ui.detail
+package com.qq7te.totalrecall.ui.detail
 
 import android.net.Uri
 import android.os.Bundle
@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.example.captureapp.CaptureApplication
-import com.example.captureapp.databinding.FragmentDetailBinding
+import com.qq7te.totalrecall.CaptureApplication
+import com.qq7te.totalrecall.databinding.FragmentDetailBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
 

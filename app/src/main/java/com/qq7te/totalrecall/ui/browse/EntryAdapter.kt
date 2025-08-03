@@ -1,4 +1,4 @@
-package com.example.captureapp.ui.browse
+package com.qq7te.totalrecall.ui.browse
 
 import android.net.Uri
 import android.view.LayoutInflater
@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.captureapp.data.Entry
-import com.example.captureapp.databinding.ItemEntryBinding
+import com.qq7te.totalrecall.data.Entry
+import com.qq7te.totalrecall.databinding.ItemEntryBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
 

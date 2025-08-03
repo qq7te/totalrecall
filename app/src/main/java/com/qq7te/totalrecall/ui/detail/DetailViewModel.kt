@@ -1,12 +1,12 @@
-package com.example.captureapp.ui.detail
+package com.qq7te.totalrecall.ui.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.captureapp.data.Entry
-import com.example.captureapp.data.EntryRepository
+import com.qq7te.totalrecall.data.Entry
+import com.qq7te.totalrecall.data.EntryRepository
 import kotlinx.coroutines.launch
 
 class DetailViewModel(

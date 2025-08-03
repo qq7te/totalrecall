@@ -1,4 +1,4 @@
-package com.example.captureapp.ui.capture
+package com.qq7te.totalrecall.ui.capture
 
 import android.Manifest
 import android.content.ContentValues
@@ -20,9 +20,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.captureapp.CaptureApplication
-import com.example.captureapp.R
-import com.example.captureapp.databinding.FragmentCaptureBinding
+import com.qq7te.totalrecall.CaptureApplication
+import com.qq7te.totalrecall.R
+import com.qq7te.totalrecall.databinding.FragmentCaptureBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.launch

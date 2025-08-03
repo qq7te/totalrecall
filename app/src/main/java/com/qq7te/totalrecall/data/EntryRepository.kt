@@ -1,4 +1,4 @@
-package com.example.captureapp.data
+package com.qq7te.totalrecall.data
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

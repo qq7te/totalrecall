@@ -1,4 +1,4 @@
-package com.example.captureapp.data
+package com.qq7te.totalrecall.data
 
 import androidx.room.Dao
 import androidx.room.Insert

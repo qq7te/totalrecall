@@ -1,9 +1,9 @@
-package com.example.captureapp.ui.capture
+package com.qq7te.totalrecall.ui.capture
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.captureapp.data.Entry
-import com.example.captureapp.data.EntryRepository
+import com.qq7te.totalrecall.data.Entry
+import com.qq7te.totalrecall.data.EntryRepository
 import java.util.Date
 
 class CaptureViewModel(private val repository: EntryRepository) : ViewModel() {

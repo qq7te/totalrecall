@@ -1,4 +1,4 @@
-package com.example.captureapp.ui.browse
+package com.qq7te.totalrecall.ui.browse
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.captureapp.data.Entry
-import com.example.captureapp.data.EntryRepository
+import com.qq7te.totalrecall.data.Entry
+import com.qq7te.totalrecall.data.EntryRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
