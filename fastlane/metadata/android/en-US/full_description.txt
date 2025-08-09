@@ -1,0 +1,20 @@
+A privacy-focused, open-source photo journaling app that helps you capture and organize your memories with photos, text, and optional location data.
+
+Total Recall features a clean, intuitive interface for creating entries with:
+• Photo capture using modern CameraX API
+• Text descriptions and notes
+• Optional GPS location tracking (using native Android LocationManager)
+• Full-text search across all entries
+• Chronological browsing of all memories
+• Secure local storage with no cloud dependency
+
+Key privacy features:
+• All data stays on your device
+• No external servers or data transmission
+• Optional location tracking that you control
+• No analytics, tracking, or advertising
+• FOSS-compatible dependencies only
+
+Perfect for daily journaling, travel documentation, project notes, or any time you want to remember a moment with context.
+
+All dependencies are open source and F-Droid compatible, with no proprietary Google Play Services required.

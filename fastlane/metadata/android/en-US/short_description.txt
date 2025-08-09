@@ -1,0 +1,1 @@
+Privacy-focused memory helper app, which captures memories with photo, text and optional GPS location. All locally stored, nothing shared with anyone
