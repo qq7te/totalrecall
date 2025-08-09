@@ -76,6 +76,9 @@ class CaptureFragment : Fragment() {
         binding.saveButton.setOnClickListener { saveEntry() }
         binding.retakeButton.setOnClickListener { retakePhoto() }
 
+        // Default to pre-capture UI
+        showPreCaptureUI()
+
         // Only request permissions if not already granted
         if (allPermissionsGranted()) {
             startCamera()
@@ -157,13 +160,8 @@ class CaptureFragment : Fragment() {
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     photoUri = output.savedUri
                     // switch to small preview mode
-                    binding.viewFinder.visibility = View.GONE
-                    binding.photoPreview.visibility = View.VISIBLE
                     binding.photoPreview.setImageURI(photoUri)
-                    binding.retakeButton.visibility = View.VISIBLE
-                    binding.captureButton.visibility = View.GONE
-                    binding.saveButton.visibility = View.VISIBLE
-                    binding.saveButton.isEnabled = true
+                    showPostCaptureUI()
                 }
                 
                 override fun onError(exc: ImageCaptureException) {
@@ -179,12 +177,7 @@ class CaptureFragment : Fragment() {
     
     private fun retakePhoto() {
         // Restore camera preview and hide small photo
-        binding.viewFinder.visibility = View.VISIBLE
-        binding.photoPreview.visibility = View.GONE
-        binding.retakeButton.visibility = View.GONE
-        binding.captureButton.visibility = View.VISIBLE
-        binding.saveButton.visibility = View.VISIBLE
-        binding.saveButton.isEnabled = false
+        showPreCaptureUI()
         photoUri = null
         // restart camera in case it was stopped
         startCamera()
@@ -192,7 +185,7 @@ class CaptureFragment : Fragment() {
 
     private fun saveEntry() {
         val text = binding.entryText.text.toString() ?: ""
-        if (text.isBlank() || photoUri == null) {
+        if (text.isBlank()) {
             Toast.makeText(requireContext(), "Please enter text and take a photo", Toast.LENGTH_SHORT).show()
             return
         }
@@ -213,8 +206,7 @@ class CaptureFragment : Fragment() {
                 
                 // Reset UI
                 binding.entryText.text?.clear()
-                binding.photoPreview.visibility = View.GONE
-                binding.saveButton.isEnabled = false
+                showPreCaptureUI()
                 photoUri = null
                 
                 Toast.makeText(requireContext(), "Entry saved successfully", Toast.LENGTH_SHORT).show()
@@ -230,8 +222,7 @@ class CaptureFragment : Fragment() {
                 
                 // Reset UI
                 binding.entryText.text?.clear()
-                binding.photoPreview.visibility = View.GONE
-                binding.saveButton.isEnabled = false
+                showPreCaptureUI()
                 photoUri = null
                 
                 Toast.makeText(requireContext(), "Entry saved without location", Toast.LENGTH_SHORT).show()
@@ -255,6 +246,22 @@ class CaptureFragment : Fragment() {
         return null
     }
     
+    private fun showPreCaptureUI() {
+        binding.viewFinder.visibility = View.VISIBLE
+        binding.photoPreview.visibility = View.GONE
+        binding.retakeButton.visibility = View.GONE
+        binding.captureButton.visibility = View.VISIBLE
+        binding.saveButton.visibility = View.VISIBLE
+    }
+
+    private fun showPostCaptureUI() {
+        binding.viewFinder.visibility = View.GONE
+        binding.photoPreview.visibility = View.VISIBLE
+        binding.retakeButton.visibility = View.VISIBLE
+        binding.captureButton.visibility = View.GONE
+        binding.saveButton.visibility = View.VISIBLE
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         cameraExecutor.shutdown()
