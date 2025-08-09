@@ -1,0 +1,29 @@
+Categories:
+    - Photography
+    - Writing
+License: MIT
+WebSite: https://github.com/qq7te/totalrecall
+SourceCode: https://github.com/qq7te/totalrecall
+IssueTracker: https://github.com/qq7te/totalrecall/issues
+Changelog: https://github.com/qq7te/totalrecall/blob/main/CHANGELOG.md
+
+AutoUpdateMode: VersionTags
+UpdateCheckMode: Tags
+
+Name: Total Recall
+Summary: A privacy-focused, open-source memory crutch app for Android that lets you capture memories with photos, text, and location data.
+Description: |
+    A privacy-focused, open-source memory crutch app for Android that lets you capture memories with photos, text, and location data.
+    All data is stored locally on your device; the app has no network permissions and contains no trackers or analytics.
+
+Builds:
+    - versionName: 0.1
+      versionCode: 1
+      commit: v0.1   # change to a specific git tag or commit if you have one
+      subdir: .
+      gradle:
+          - assembleRelease
+      output: app/build/outputs/apk/release/app-release.apk
+
+# The app requests no network permission, so we explicitly declare this.
+RequiresInternet: false
