@@ -59,7 +59,16 @@ class DetailFragment : Fragment() {
                 
                 Glide.with(this)
                     .load(Uri.parse(it.photoPath))
+                    .fitCenter()
                     .into(binding.photo)
+
+                // Cap photo height to 80% of the current viewport after layout
+                binding.photo.post {
+                    val parentHeight = binding.root.height
+                    if (parentHeight > 0) {
+                        binding.photo.maxHeight = (parentHeight * 0.8f).toInt()
+                    }
+                }
             }
         }
         
