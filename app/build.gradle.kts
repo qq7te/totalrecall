@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
-    id("androidx.navigation.safeargs.kotlin")
+alias(libs.plugins.kotlin.ksp)
+    id("androidx.navigation.safeargs.kotlin") version "2.5.0"
 }
 
 android {
@@ -14,7 +14,7 @@ android {
         minSdk = 31
         targetSdk = 35
         versionCode = 1
-        versionName = "1.0"
+        versionName = "0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -41,6 +41,9 @@ android {
         dataBinding = true
         buildConfig = true
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.15"
+    }
 }
 
 dependencies {
@@ -53,6 +56,24 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
+    // Room database
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+ksp(libs.androidx.room.compiler)
+
+    // CameraX
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
+
+    // Glide for image loading
+    implementation(libs.glide)
+ksp(libs.glide.compiler)
+
+    // RecyclerView & LiveData helpers
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
     
     // Navigation component
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.0")
