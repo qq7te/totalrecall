@@ -12,7 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.qq7te.totalrecall.CaptureApplication
+import com.qq7te.totalrecall.TotalRecallApplication
 import com.qq7te.totalrecall.databinding.FragmentDetailBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -26,7 +26,7 @@ class DetailFragment : Fragment() {
     
     private val viewModel: DetailViewModel by viewModels {
         DetailViewModelFactory(
-            (requireActivity().application as CaptureApplication).repository,
+            (requireActivity().application as TotalRecallApplication).repository,
             args.entryId
         )
     }

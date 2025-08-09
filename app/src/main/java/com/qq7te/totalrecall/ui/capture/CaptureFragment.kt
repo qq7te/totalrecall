@@ -23,7 +23,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.qq7te.totalrecall.CaptureApplication
+import com.qq7te.totalrecall.TotalRecallApplication
 import com.qq7te.totalrecall.R
 import com.qq7te.totalrecall.databinding.FragmentCaptureBinding
 import kotlinx.coroutines.launch
@@ -38,7 +38,7 @@ class CaptureFragment : Fragment() {
     private val binding get() = _binding!!
     
     private val viewModel: CaptureViewModel by viewModels {
-        CaptureViewModelFactory((requireActivity().application as CaptureApplication).repository)
+        CaptureViewModelFactory((requireActivity().application as TotalRecallApplication).repository)
     }
     
     private var imageCapture: ImageCapture? = null
@@ -74,6 +74,7 @@ class CaptureFragment : Fragment() {
         
         binding.captureButton.setOnClickListener { takePhoto() }
         binding.saveButton.setOnClickListener { saveEntry() }
+        binding.retakeButton.setOnClickListener { retakePhoto() }
 
         // Only request permissions if not already granted
         if (allPermissionsGranted()) {
@@ -155,8 +156,13 @@ class CaptureFragment : Fragment() {
             object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     photoUri = output.savedUri
+                    // switch to small preview mode
+                    binding.viewFinder.visibility = View.GONE
                     binding.photoPreview.visibility = View.VISIBLE
                     binding.photoPreview.setImageURI(photoUri)
+                    binding.retakeButton.visibility = View.VISIBLE
+                    binding.captureButton.visibility = View.GONE
+                    binding.saveButton.visibility = View.VISIBLE
                     binding.saveButton.isEnabled = true
                 }
                 
@@ -171,6 +177,19 @@ class CaptureFragment : Fragment() {
         )
     }
     
+    private fun retakePhoto() {
+        // Restore camera preview and hide small photo
+        binding.viewFinder.visibility = View.VISIBLE
+        binding.photoPreview.visibility = View.GONE
+        binding.retakeButton.visibility = View.GONE
+        binding.captureButton.visibility = View.VISIBLE
+        binding.saveButton.visibility = View.VISIBLE
+        binding.saveButton.isEnabled = false
+        photoUri = null
+        // restart camera in case it was stopped
+        startCamera()
+    }
+
     private fun saveEntry() {
         val text = binding.entryText.text.toString() ?: ""
         if (text.isBlank() || photoUri == null) {

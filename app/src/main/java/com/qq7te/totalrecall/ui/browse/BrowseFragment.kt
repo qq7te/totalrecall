@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.qq7te.totalrecall.CaptureApplication
+import com.qq7te.totalrecall.TotalRecallApplication
 import com.qq7te.totalrecall.databinding.FragmentBrowseBinding
 
 class BrowseFragment : Fragment() {
@@ -18,7 +18,7 @@ class BrowseFragment : Fragment() {
     private val binding get() = _binding!!
     
     private val viewModel: BrowseViewModel by viewModels {
-        BrowseViewModelFactory((requireActivity().application as CaptureApplication).repository)
+        BrowseViewModelFactory((requireActivity().application as TotalRecallApplication).repository)
     }
     
     private lateinit var adapter: EntryAdapter
