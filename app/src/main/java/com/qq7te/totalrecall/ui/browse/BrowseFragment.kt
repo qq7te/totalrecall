@@ -53,6 +53,8 @@ class BrowseFragment : Fragment() {
     }
     
     private fun setupSearch() {
+        binding.searchView.isFocusable = true
+        binding.searchView.onActionViewExpanded()
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
