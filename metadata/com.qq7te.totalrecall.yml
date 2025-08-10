@@ -17,9 +17,9 @@ Description: |
   All data is stored locally on your device; the app has no network permissions and contains no trackers or analytics.
 
 Builds:
-  - versionName: '0.1'
-    versionCode: 1
-    commit: 'v0.1'
+  - versionName: '0.2'
+    versionCode: 2
+    commit: 'v0.2'
     subdir: .
     gradle:
       - assembleRelease
