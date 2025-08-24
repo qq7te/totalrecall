@@ -75,6 +75,9 @@ ksp(libs.glide.compiler)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     
+    // JSON serialization for export
+    implementation("com.google.code.gson:gson:2.10.1")
+    
     // Navigation component
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.0")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.0")

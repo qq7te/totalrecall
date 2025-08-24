@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface EntryDao {
-@Insert
-suspend fun insert(entry: Entry): Long
+    @Insert
+    suspend fun insert(entry: Entry): Long
     
     @Query("SELECT * FROM entries ORDER BY timestamp DESC")
     fun getAllEntriesByTimestamp(): Flow<List<Entry>>
@@ -20,6 +20,9 @@ suspend fun insert(entry: Entry): Long
     @Query("SELECT * FROM entries WHERE id = :id")
     fun getEntryById(id: Long): Entry
     
-@Delete
-suspend fun delete(entry: Entry): Int
+    @Delete
+    suspend fun delete(entry: Entry): Int
+    
+    @Query("SELECT * FROM entries ORDER BY timestamp DESC")
+    suspend fun getAllEntriesForExport(): List<Entry>
 } 

@@ -29,4 +29,10 @@ class EntryRepository(private val entryDao: EntryDao) {
             entryDao.delete(entry)
         }
     }
+    
+    suspend fun getAllEntriesForExport(): List<Entry> {
+        return withContext(Dispatchers.IO) {
+            entryDao.getAllEntriesForExport()
+        }
+    }
 } 
