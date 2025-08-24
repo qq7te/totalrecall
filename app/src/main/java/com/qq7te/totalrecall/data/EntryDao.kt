@@ -25,4 +25,7 @@ interface EntryDao {
     
     @Query("SELECT * FROM entries ORDER BY timestamp DESC")
     suspend fun getAllEntriesForExport(): List<Entry>
+    
+    @Query("DELETE FROM entries")
+    suspend fun clearAllEntries()
 } 

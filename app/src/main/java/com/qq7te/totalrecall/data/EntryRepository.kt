@@ -35,4 +35,10 @@ class EntryRepository(private val entryDao: EntryDao) {
             entryDao.getAllEntriesForExport()
         }
     }
+    
+    suspend fun clearAllEntries() {
+        return withContext(Dispatchers.IO) {
+            entryDao.clearAllEntries()
+        }
+    }
 } 
