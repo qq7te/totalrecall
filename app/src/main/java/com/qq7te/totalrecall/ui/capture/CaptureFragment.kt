@@ -23,6 +23,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.qq7te.totalrecall.TotalRecallApplication
 import com.qq7te.totalrecall.R
 import com.qq7te.totalrecall.databinding.FragmentCaptureBinding
@@ -37,6 +39,8 @@ class CaptureFragment : Fragment() {
     private var _binding: FragmentCaptureBinding? = null
     private val binding get() = _binding!!
     
+    private val args: CaptureFragmentArgs by navArgs()
+    
     private val viewModel: CaptureViewModel by viewModels {
         CaptureViewModelFactory((requireActivity().application as TotalRecallApplication).repository)
     }
@@ -45,6 +49,7 @@ class CaptureFragment : Fragment() {
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var locationManager: LocationManager
     private var photoUri: Uri? = null
+    private var editingEntryId: Long? = null
     
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -76,14 +81,20 @@ class CaptureFragment : Fragment() {
         binding.saveButton.setOnClickListener { saveEntry() }
         binding.retakeButton.setOnClickListener { retakePhoto() }
 
-        // Default to pre-capture UI
-        showPreCaptureUI()
-
-        // Only request permissions if not already granted
-        if (allPermissionsGranted()) {
-            startCamera()
+        if (args.entryId > 0L) {
+            // Edit existing entry: load current data, disable camera controls
+            editingEntryId = args.entryId
+            loadEntryForEditing(args.entryId)
         } else {
-            requestPermissions()
+            // New entry flow: default to pre-capture UI and start camera
+            showPreCaptureUI()
+
+            // Only request permissions if not already granted
+            if (allPermissionsGranted()) {
+                startCamera()
+            } else {
+                requestPermissions()
+            }
         }
     }
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
@@ -182,11 +193,27 @@ class CaptureFragment : Fragment() {
         // restart camera in case it was stopped
         startCamera()
     }
-
+    
     private fun saveEntry() {
-        val text = binding.entryText.text.toString() ?: ""
+        val text = binding.entryText.text.toString()
         if (text.isBlank()) {
-            Toast.makeText(requireContext(), "Please enter text and take a photo", Toast.LENGTH_SHORT).show()
+            val message = if (editingEntryId != null) {
+                "Please enter text"
+            } else {
+                "Please enter text and take a photo"
+            }
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // If editing an existing entry, only update the text and return to previous screen
+        val existingId = editingEntryId
+        if (existingId != null) {
+            lifecycleScope.launch {
+                viewModel.updateEntryText(existingId, text)
+                Toast.makeText(requireContext(), "Entry updated successfully", Toast.LENGTH_SHORT).show()
+                findNavController().navigateUp()
+            }
             return
         }
         
@@ -260,6 +287,27 @@ class CaptureFragment : Fragment() {
         binding.retakeButton.visibility = View.VISIBLE
         binding.captureButton.visibility = View.GONE
         binding.saveButton.visibility = View.VISIBLE
+    }
+
+    private fun loadEntryForEditing(entryId: Long) {
+        // In edit mode we reuse this screen but disable camera and show existing photo/text
+        binding.viewFinder.visibility = View.GONE
+        binding.captureButton.visibility = View.GONE
+        binding.retakeButton.visibility = View.GONE
+        binding.photoPreview.visibility = View.VISIBLE
+        binding.saveButton.visibility = View.VISIBLE
+
+        lifecycleScope.launch {
+            val entry = viewModel.getEntryById(entryId)
+            if (entry != null) {
+                photoUri = Uri.parse(entry.photoPath)
+                binding.photoPreview.setImageURI(photoUri)
+                binding.entryText.setText(entry.text)
+            } else {
+                Toast.makeText(requireContext(), "Entry not found", Toast.LENGTH_SHORT).show()
+                findNavController().navigateUp()
+            }
+        }
     }
 
     override fun onDestroyView() {

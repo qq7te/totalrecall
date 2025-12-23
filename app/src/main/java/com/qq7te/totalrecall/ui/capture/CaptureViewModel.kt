@@ -18,6 +18,18 @@ class CaptureViewModel(private val repository: EntryRepository) : ViewModel() {
         )
         repository.insert(entry)
     }
+
+    suspend fun getEntryById(id: Long): Entry? {
+        return try {
+            repository.getEntryById(id)
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    suspend fun updateEntryText(id: Long, newText: String) {
+        repository.updateEntryText(id, newText)
+    }
 }
 
 class CaptureViewModelFactory(private val repository: EntryRepository) : ViewModelProvider.Factory {

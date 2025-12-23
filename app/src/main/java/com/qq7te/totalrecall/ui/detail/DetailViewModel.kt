@@ -21,10 +21,10 @@ class DetailViewModel(
     val deleteResult: LiveData<Boolean?> = _deleteResult
     
     init {
-        loadEntry()
+        refreshEntry()
     }
     
-    private fun loadEntry() {
+    fun refreshEntry() {
         viewModelScope.launch {
             try {
                 _entry.value = repository.getEntryById(entryId)

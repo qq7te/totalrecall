@@ -9,7 +9,12 @@
         android:id="@+id/navigation_capture"
         android:name="com.qq7te.totalrecall.ui.capture.CaptureFragment"
         android:label="Capture"
-        tools:layout="@layout/fragment_capture" />
+        tools:layout="@layout/fragment_capture">
+        <argument
+            android:name="entryId"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_browse"
@@ -29,5 +34,8 @@
         <argument
             android:name="entryId"
             app:argType="long" />
+        <action
+            android:id="@+id/action_detail_to_capture"
+            app:destination="@id/navigation_capture" />
     </fragment>
 </navigation> 
