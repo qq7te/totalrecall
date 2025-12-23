@@ -20,6 +20,9 @@ interface EntryDao {
     @Query("SELECT * FROM entries WHERE id = :id")
     fun getEntryById(id: Long): Entry
     
+    @Query("UPDATE entries SET text = :text WHERE id = :id")
+    suspend fun updateEntryText(id: Long, text: String): Int
+    
     @Delete
     suspend fun delete(entry: Entry): Int
     

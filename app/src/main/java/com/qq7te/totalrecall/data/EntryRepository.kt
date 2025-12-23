@@ -24,6 +24,12 @@ class EntryRepository(private val entryDao: EntryDao) {
         }
     }
     
+    suspend fun updateEntryText(id: Long, text: String) {
+        return withContext(Dispatchers.IO) {
+            entryDao.updateEntryText(id, text)
+        }
+    }
+    
     suspend fun delete(entry: Entry) {
         return withContext(Dispatchers.IO) {
             entryDao.delete(entry)

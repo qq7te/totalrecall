@@ -86,6 +86,16 @@ class DetailFragment : Fragment() {
         binding.buttonDelete.setOnClickListener {
             showDeleteConfirmationDialog()
         }
+
+        binding.buttonEdit.setOnClickListener {
+            val action = DetailFragmentDirections.actionDetailToCapture(args.entryId)
+            findNavController().navigate(action)
+        }
+    }
+    
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshEntry()
     }
     
     private fun showDeleteConfirmationDialog() {

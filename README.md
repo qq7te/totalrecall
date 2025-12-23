@@ -9,6 +9,7 @@ A privacy-focused, open-source memory crutch app for Android that lets you captu
 - 📍 **Location Tracking**: Optional GPS location for entries (using native Android LocationManager)
 - 🔍 **Search**: Find entries by text content
 - 🗂️ **Browse**: View all entries sorted by timestamp
+- ✏️ **Edit Entries**: Open an entry from Browse, tweak its text from the detail screen while keeping photo and location intact
 - 🗑️ **Delete**: Remove entries with confirmation dialog
 - 🔒 **Privacy**: All data stored locally, FOSS-compatible
 
