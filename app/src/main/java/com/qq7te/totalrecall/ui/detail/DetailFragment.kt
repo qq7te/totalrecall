@@ -43,6 +43,14 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
+        // Click listener to open full-screen photo viewer
+        binding.photo.setOnClickListener {
+            viewModel.entry.value?.let { entry ->
+                val dialog = PhotoViewerDialogFragment.newInstance(entry.photoPath)
+                dialog.show(childFragmentManager, "photo_viewer")
+            }
+        }
+        
         viewModel.entry.observe(viewLifecycleOwner) { entry ->
             entry?.let {
                 binding.textContent.text = it.text

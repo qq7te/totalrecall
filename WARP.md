@@ -91,6 +91,20 @@ Entries can be re-edited from the detail screen:
 - `CaptureFragment` switches to an "edit" mode (no camera preview) that pre-fills the existing photo and text.
 - Saving in edit mode calls `EntryRepository.updateEntryText`, which delegates to `EntryDao.updateEntryText` to update only the `text` column.
 
+### Photo Zoom Viewer
+
+The app provides a fullscreen photo viewing experience with zoom and pan capabilities:
+- **Detail View**: `DetailFragment` displays the entry photo in a standard `ImageView`. Tapping the photo opens the fullscreen viewer.
+- **Fullscreen Viewer**: `PhotoViewerDialogFragment` displays the photo in a `ZoomableImageView` that supports:
+  - Pinch-to-zoom gestures (1x to 4x magnification)
+  - Pan/drag to move around zoomed images
+  - Double-tap to zoom (via `GestureDetector`)
+  - Single-tap detection for custom actions
+- **Implementation**: 
+  - `ZoomableImageView` is a custom `AppCompatImageView` in `ui/detail/` that uses `Matrix` transformations for zoom/pan.
+  - Touch events are handled via `ScaleGestureDetector` for pinch-zoom and a custom `GestureDetector` for taps.
+  - The view maintains min/max scale limits and handles multi-touch gestures.
+
 ## Project-Specific Rules for Future Agents
 
 1. Use **suspend** DAO functions and favour `Flow` over `LiveData` in new code.  
