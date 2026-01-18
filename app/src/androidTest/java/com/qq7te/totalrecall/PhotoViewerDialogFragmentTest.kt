@@ -4,6 +4,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.qq7te.totalrecall.ui.detail.PhotoViewerDialogFragment
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -18,37 +19,67 @@ import org.junit.runner.RunWith
 class PhotoViewerDialogFragmentTest {
 
     @Test
-    fun photoViewerDialogFragment_createsWithCorrectArguments() {
-        val testUri = "content://media/external/images/media/1000000001"
+    fun photoViewerDialogFragment_newInstance_createsWithCorrectPhotoUriArgument() {
+        // Test various URI formats to ensure factory method correctly creates instances
+        val testCases = listOf(
+            "content://media/external/images/media/1000000001",
+            "file:///data/user/0/com.qq7te.totalrecall/files/photo_image.jpg",
+            "content://test/image.jpg"
+        )
         
-        // Create fragment with specific URI
-        val fragment = PhotoViewerDialogFragment.newInstance(testUri)
+        testCases.forEach { testUri ->
+            // Create fragment with specific URI
+            val fragment = PhotoViewerDialogFragment.newInstance(testUri)
+            
+            // Verify fragment is created
+            assertNotNull("Fragment should be created for URI: $testUri", fragment)
+            
+            // Verify the arguments were set correctly
+            val args = fragment.arguments
+            assertNotNull("Arguments should not be null for URI: $testUri", args)
+            assertTrue(
+                "Arguments should contain photo_uri key",
+                args?.containsKey("photo_uri") == true
+            )
+            assertEquals(
+                "Photo URI should match input",
+                testUri,
+                args?.getString("photo_uri")
+            )
+        }
+    }
+
+    @Test
+    fun photoViewerDialogFragment_handlesEmptyUri() {
+        // Test behavior with empty URI
+        val fragment = PhotoViewerDialogFragment.newInstance("")
         
-        // Verify the arguments were set correctly
+        assertNotNull("Fragment should handle empty URI", fragment)
+        
         val args = fragment.arguments
         assertNotNull("Arguments should not be null", args)
         assertEquals(
-            "Photo URI should match",
-            testUri,
+            "Empty URI should be preserved",
+            "",
             args?.getString("photo_uri")
         )
     }
 
     @Test
-    fun photoViewerDialogFragment_canBeInstantiated() {
-        // Verify that the fragment can be created without errors
-        val fragment = PhotoViewerDialogFragment.newInstance("content://test/image.jpg")
+    fun photoViewerDialogFragment_handlesSpecialCharactersInUri() {
+        // Test behavior with special characters in URI
+        val specialUri = "file:///data/user/0/com.test/photos/image_with-hyphens_and_underscores.jpg"
         
-        assertNotNull("Fragment should be created successfully", fragment)
-    }
-
-    @Test
-    fun photoViewerDialogFragment_hasCorrectDialogStyle() {
-        // The fragment should use fullscreen black theme
-        // This is verified by checking that onCreate sets the style
-        val fragment = PhotoViewerDialogFragment()
+        val fragment = PhotoViewerDialogFragment.newInstance(specialUri)
         
-        // Fragment should be instantiable
-        assertNotNull("Fragment should exist", fragment)
+        assertNotNull("Fragment should handle special characters", fragment)
+        
+        val args = fragment.arguments
+        assertNotNull("Arguments should not be null", args)
+        assertEquals(
+            "Special characters should be preserved",
+            specialUri,
+            args?.getString("photo_uri")
+        )
     }
 }
